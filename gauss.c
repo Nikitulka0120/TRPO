@@ -145,7 +145,7 @@ int main()
     puts("Решение методом Гаусса с использованием треугольной матрицы:");
     triangleGaussMTD(n, m, matrixTRI);
 
-    printMatrix(n, m, matrixTRI);
+    // printMatrix(n, m, matrixTRI);
 
     puts("\nРешение методом Гаусса с использованием диагональной матрицы:");
     DiagonalGauss(n, m, matrixDIO);
