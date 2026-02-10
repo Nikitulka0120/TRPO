@@ -140,10 +140,10 @@ int main()
         {-4, 1, 2, 4},
         {1, 3, 2, 8},
     };
-    // printf("Изначальная матрица:\n");
-    // printMatrix(n, m, matrixTRI);
-    // puts("Решение методом Гаусса с использованием треугольной матрицы:");
-    // triangleGaussMTD(n, m, matrixTRI);
+    printf("Изначальная матрица:\n");
+    printMatrix(n, m, matrixTRI);
+    puts("Решение методом Гаусса с использованием треугольной матрицы:");
+    triangleGaussMTD(n, m, matrixTRI);
 
     // printMatrix(n, m, matrixTRI);
 
