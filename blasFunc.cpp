@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <chrono>
 #include <cblas.h>
 
 template <typename T>
@@ -29,12 +30,20 @@ int main() {
 
     std::cout << "Подсчет матрицы размером " << size << std::endl;
 
+    auto start_my = std::chrono::high_resolution_clock::now();
     trsm(size, size, alpha, A.data(), size, B_my.data(), size);
+    auto end_my = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> duration_my = end_my - start_my;
 
+    auto start_blas = std::chrono::high_resolution_clock::now();
     cblas_dtrsm(CblasColMajor, CblasLeft, CblasLower, CblasNoTrans, CblasNonUnit, 
                 size, size, alpha, A.data(), size, B_blas.data(), size);
+    auto end_blas = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> duration_blas = end_blas - start_blas;
 
     std::cout << "Расчет окончен" << std::endl;
+    std::cout << "Время выполнения самописной функции: " << duration_my.count() << " сек" << std::endl;
+    std::cout << "Время выполнения OpenBLAS: " << duration_blas.count() << " сек" << std::endl;
 
     return 0;
 }
