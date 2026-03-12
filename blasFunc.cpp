@@ -49,10 +49,11 @@ int main() {
         
         double duration = std::chrono::duration<double>(end - start).count();
         my_times.push_back(duration);
-        std::cout << "  Итерация " << i + 1 << ": " << duration << " сек" << std::endl;
+        std::cout << "  Итерация " << i + 1 << ": " << std::fixed << std::setprecision(4) << duration << " сек" << std::endl;
     }
     double myGeom = geometric(my_times);
-    std::cout << ">> Самописное геометрическое: " << myGeom << " сек" << std::endl;
+    std::cout << ">> Самописное среднее геом: " << myGeom << " сек" << std::endl;
+
     std::cout << "\n[2/2] Сравнение с OpenBLAS по потокам..." << std::endl;
     
     for (int t : threads_list) {
@@ -63,11 +64,15 @@ int main() {
         for (int i = 0; i < iterations; ++i) {
             std::vector<double> B_blas = B_orig;
             auto start = std::chrono::high_resolution_clock::now();
+            
             cblas_dtrsm(CblasColMajor, CblasLeft, CblasLower, CblasNoTrans, CblasNonUnit, 
                         size, size, alpha, A.data(), size, B_blas.data(), size);
-            auto end = std::chrono::high_resolution_clock::now();
             
-            blas_times.push_back(std::chrono::duration<double>(end - start).count());
+            auto end = std::chrono::high_resolution_clock::now();
+            double duration = std::chrono::duration<double>(end - start).count();
+            
+            blas_times.push_back(duration);
+            std::cout << "  Итерация " << i + 1 << ": " << std::fixed << std::setprecision(6) << duration << " сек" << std::endl;
         }
 
         double blasGeom = geometric(blas_times);
